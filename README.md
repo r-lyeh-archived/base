@@ -15,8 +15,8 @@ base91x is a basE91 modification. Original basE91 by Joachim Henke can be found 
 
 sample
 ------
-<pre>
-#include &lt;iostream&gt;
+```c++
+#include <iostream>
 #include "base91x.hpp"
 
 int main( int argc, const char **argv )
@@ -24,7 +24,7 @@ int main( int argc, const char **argv )
     std::string encoded = base91x::encode("hello world \x1\n");
     std::string decoded = base91x::decode(encoded);
 
-    std::cout &lt;&lt; decoded;
+    std::cout << decoded;
     return 0;
 }
-</pre>
+```
