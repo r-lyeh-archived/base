@@ -1,7 +1,7 @@
 base91x
 =======
 
-- base91x is a lightweight binary/text data encoder and decoder written in C++. 
+- base91x is a lightweight binary/text data encoder and decoder written in C++.
 - base91x features 19% to 10% less overhead than base64.
 - base91x is JSON friendly. Encoded data can be "quoted" with no escaping.
 - base91x is XML friendly. Encoded data can be "quoted" as attribute or written as text() with no escaping.
@@ -19,12 +19,12 @@ sample
 #include <iostream>
 #include "base91x.hpp"
 
-int main( int argc, const char **argv )
+int main()
 {
-    std::string encoded = base91x::encode("hello world \x1\n");
+    std::string encoded = base91x::encode("hello world \x1\x2");
     std::string decoded = base91x::decode(encoded);
 
-    std::cout << decoded;
+    std::cout << decoded << std::endl;
     return 0;
 }
 ```

@@ -93,14 +93,14 @@ namespace base91x
         };
     #endif
 
-    std::string encode( const std::string &text ) {
+    std::string encode( const std::string &binary ) {
         std::string ob;
-        const unsigned char *ib = (unsigned char *) text.c_str();
+        const unsigned char *ib = (unsigned char *) binary.c_str();
 
         unsigned long queue = 0;
         unsigned int nbits = 0;
 
-        for( size_t len = text.size(); len--; ) {
+        for( size_t len = binary.size(); len--; ) {
             queue |= *ib++ << nbits;
             nbits += 8;
             if (nbits > 13) {   /* enough bits in queue */
@@ -126,19 +126,19 @@ namespace base91x
                 ob.push_back( enctab[queue / 91] );
         }
 
-        /* return 'binary' data (ASCII text still) */
+        /* return text data */
         return ob;
     }
 
-    std::string decode( const std::string &binary ) {
+    std::string decode( const std::string &text ) {
         std::string ob;
-        const unsigned char *ib = (unsigned char *) binary.c_str();
+        const unsigned char *ib = (unsigned char *) text.c_str();
 
         unsigned long queue = 0;
         unsigned int nbits = 0;
         int val = -1;
 
-        for( size_t len = binary.size(); len--; ) {
+        for( size_t len = text.size(); len--; ) {
             unsigned int d = dectab[*ib++];
             if (d == 91)
                 continue;   /* ignore non-alphabet chars */
@@ -161,7 +161,7 @@ namespace base91x
         if (val != -1)
             ob.push_back( char( queue | val << nbits ) );
 
-        /* return original text */
+        /* return original binary data */
         return ob;
     }
 }

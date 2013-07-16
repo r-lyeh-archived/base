@@ -1,11 +1,12 @@
 #include <iostream>
 #include "base91x.hpp"
 
-int main( int argc, const char **argv )
+int main()
 {
-    std::string encoded = base91x::encode("hello world \x1\n");
+    std::string encoded = base91x::encode("hello world \x1\x2");
     std::string decoded = base91x::decode(encoded);
 
-    std::cout << decoded;
+    std::cout << decoded << std::endl;
+
     return 0;
 }
