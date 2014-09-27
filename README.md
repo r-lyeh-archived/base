@@ -8,7 +8,7 @@ base91x
 - base91x is TSV friendly. Encoded data can be splitted with tabs, spaces, linefeeds and carriages.
 - Tiny. Around ~250 LOC. One file and one header.
 - No external dependencies.
-- MIT licensed.
+- BOOST licensed.
 
 about
 -----
