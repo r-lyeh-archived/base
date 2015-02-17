@@ -1,4 +1,4 @@
-base91x
+base91x <a href="https://travis-ci.org/r-lyeh/base91x"><img src="https://api.travis-ci.org/r-lyeh/base91x.svg?branch=master" align="right" /></a>
 =======
 
 - base91x is a lightweight binary-to-text data encoder and decoder written in C++.
