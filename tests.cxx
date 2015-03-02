@@ -1,9 +1,10 @@
 #include <cassert>
 #include <iostream>
-#include "base91x.hpp"
+#include "base91.hpp"
 
-void compare( const std::string &ascii, bool show = true ) {
-
+template<bool show>
+void verify( const std::string &ascii ) 
+{
     std::string text64 = base<64>::encode(ascii);
     std::string text91 = base<91>::encode(ascii);
 
@@ -29,19 +30,17 @@ void compare( const std::string &ascii, bool show = true ) {
     std::cout << std::endl;
 }
 
-int main()
-{
+int main() {
     // [ref] http://en.wikipedia.org/wiki/Base64
-    compare( "Man is distinguished, not only by his reason, but by this singular passion from\n"
+    verify<true>( "Man is distinguished, not only by his reason, but by this singular passion from\n"
      "other animals, which is a lust of the mind, that by a perseverance of delight in the continued\n"
      "and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure." );
 
-    compare( "hello world \x1\x2");
+    verify<true>( "hello world \x1\x2");
 
     std::string charmap;
     for( int i = 0; i < 256; ++i ) charmap += char(i);
-    compare( charmap, false );
+    verify<false>( charmap );
 
     std::cout << "All ok." << std::endl;
-    return 0;
 }
