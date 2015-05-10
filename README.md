@@ -6,7 +6,7 @@ Base91 <a href="https://travis-ci.org/r-lyeh/base91"><img src="https://api.travi
 - Base91 is JSON, XML and TSV friendly. Encoded data can be "quoted", splitted with tabs, spaces, linefeeds and carriages.
 - Base91 is tiny and header-only. Around ~250 LOC.
 - Base91 is self-contained. No external dependencies.
-- Base91 is BOOST licensed.
+- Base91 is zlib/libpng licensed.
 
 ## Sample
 ```c++
@@ -32,6 +32,6 @@ Hello world from BASE91! ☺☻ <-> \OwJh\Io2Tv!lE^jpr4JuucSS5V*pBkAB
 ```
 
 ## Licenses
-- Base91, BOOST licensed.
+- Base91, zlib/libpng licensed.
 - Original basE91 by Joachim Henke, [BSD licensed](http://base91.sourceforge.net/).
-- Original base64 implementation by René Nyffenegger, [zlib/libPNG licensed](http://www.adp-gmbh.ch/cpp/common/base64.html).
+- Original base64 implementation by René Nyffenegger, [zlib/libpng licensed](http://www.adp-gmbh.ch/cpp/common/base64.html).

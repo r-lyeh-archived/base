@@ -1,6 +1,6 @@
 /*
  * A custom base64/91 encoder/decoder (TSV, XML and JSON friendly).
- * Copyright (c) 2011-2015 Mario 'rlyeh' Rodriguez, BOOST licensed.
+ * Copyright (c) 2011-2015 Mario 'rlyeh' Rodriguez, zlib/libpng licensed.
 
  * Base64 is based on code by René Nyffenegger (zlib/libpng licensed)
  *
@@ -35,8 +35,8 @@
 #pragma once
 #include <string>
 
-namespace { 
-    
+namespace {
+
     /* Public API */
 
     template<unsigned N> struct base {
