@@ -35,3 +35,8 @@ Hello world from BASE91! ☺☻ <-> \OwJh\Io2Tv!lE^jpr4JuucSS5V*pBkAB
 - Base91, zlib/libpng licensed.
 - Original basE91 by Joachim Henke, [BSD licensed](http://base91.sourceforge.net/).
 - Original base64 implementation by René Nyffenegger, [zlib/libpng licensed](http://www.adp-gmbh.ch/cpp/common/base64.html).
+
+## Changelog
+- v1.0.1 (2015/12/07): Update sample
+- v1.0.0 (2014/04/26): Base64 support
+- v0.0.0 (2013/04/12): Initial commit

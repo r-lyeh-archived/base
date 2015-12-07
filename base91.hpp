@@ -1,6 +1,6 @@
 /*
  * A custom base64/91 encoder/decoder (TSV, XML and JSON friendly).
- * Copyright (c) 2011-2015 Mario 'rlyeh' Rodriguez, zlib/libpng licensed.
+ * - rlyeh 2011..2015, zlib/libpng licensed.
 
  * Base64 is based on code by René Nyffenegger (zlib/libpng licensed)
  *
@@ -34,6 +34,10 @@
 
 #pragma once
 #include <string>
+
+#define BASE91_VERSION "1.0.1" /* (2015/12/07) Update sample
+#define BASE91_VERSION "1.0.0" // (2014/04/26) Base64 support
+#define BASE91_VERSION "0.0.0" // (2013/04/12) Initial commit */
 
 namespace {
 
@@ -281,3 +285,76 @@ namespace {
         return ret;
     }
 }
+
+#ifdef BASE91_BUILD_TESTS
+#include <cassert>
+#include <iostream>
+#include "base91.hpp"
+
+template<bool show>
+void verify( const std::string &ascii ) 
+{
+    std::string text64 = base<64>::encode(ascii);
+    std::string text91 = base<91>::encode(ascii);
+
+    // sanity tests
+    assert( ascii == base<64>::decode( text64 ) );
+    assert( ascii == base<91>::decode( text91 ) );
+
+    assert(  ascii.size() < text91.size() );
+    assert(  ascii.size() < text64.size() );
+    assert( text91.size() < text64.size() );
+
+    // split text tests
+    std::string split91 = text91.substr(0, 10) + "\r\n\r\n\t\t  " + text91.substr(10);
+    assert( ascii == base<91>::decode( split91 ) );
+
+    // display sizes and overhead
+    auto overhead = [&]( int size ) -> int { return ((size*100/ascii.size())-100); };
+
+    std::cout << ( show ? std::string() + '\"' + ascii + '\"' : "(hidden text)" ) << std::endl;
+    std::cout << "\tdefault: " << overhead( ascii.size()) << "% overhead (total: " <<  ascii.size() << " bytes)\n";
+    std::cout << "\tbase-64: "   << overhead(text64.size()) << "% overhead (total: " << text64.size() << " bytes)\n";
+    std::cout << "\tbase-91: "   << overhead(text91.size()) << "% overhead (total: " << text91.size() << " bytes)\n";
+    std::cout << std::endl;
+}
+
+int main() {
+    // [ref] http://en.wikipedia.org/wiki/Base64
+    verify<true>( "Man is distinguished, not only by his reason, but by this singular passion from\n"
+     "other animals, which is a lust of the mind, that by a perseverance of delight in the continued\n"
+     "and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure." );
+
+    verify<true>( "hello world \x1\x2");
+
+    std::string charmap;
+    for( int i = 0; i < 256; ++i ) charmap += char(i);
+    verify<false>( charmap );
+
+    std::cout << "All ok." << std::endl;
+}
+#endif
+
+#ifdef BASE91_BUILD_DEMO
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include "base91.hpp"
+int main( int argc, const char **argv ) {
+    if( argc > 1 ) {
+        std::ifstream ifs( argv[1], std::ios::binary );
+        std::stringstream ss;
+        ss << ifs.rdbuf();
+        std::cout << base91::encode( ss.str() ) << std::endl;
+    } else {
+        std::string encoded_64 = base64::encode("Hello world from BASE64! \x1\x2");
+        std::string decoded_64 = base64::decode(encoded_64);
+        std::cout<< decoded_64 << " <-> " << encoded_64 << std::endl;
+
+        std::string encoded_91 = base91::encode("Hello world from BASE91! \x1\x2");
+        std::string decoded_91 = base91::decode(encoded_91);
+        std::cout<< decoded_91 << " <-> " << encoded_91 << std::endl;
+    }
+}
+#endif
