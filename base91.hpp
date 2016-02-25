@@ -291,8 +291,7 @@ namespace {
 #include <iostream>
 #include "base91.hpp"
 
-template<bool show>
-void verify( const std::string &ascii ) 
+void verify( const std::string &ascii, bool display = true ) 
 {
     std::string text64 = base<64>::encode(ascii);
     std::string text91 = base<91>::encode(ascii);
@@ -305,6 +304,15 @@ void verify( const std::string &ascii )
     assert(  ascii.size() < text64.size() );
     assert( text91.size() < text64.size() );
 
+    // extra whitespace tests (base91 strings with extra whitespaces)
+    std::string white91 = " \r\n\f\t\v\n" + base<91>::encode(ascii) + " \r\n\f\t\v\n";
+    assert( ascii == base<91>::decode(white91));
+
+    // break whitespace tests (base91 strings with whitespaces in between)
+    std::string break91 = base<91>::encode(ascii);
+    break91.insert( break91.size() / 2, " \r\n\f\t\v\n" );
+    assert( ascii == base<91>::decode(break91));
+
     // split text tests
     std::string split91 = text91.substr(0, 10) + "\r\n\r\n\t\t  " + text91.substr(10);
     assert( ascii == base<91>::decode( split91 ) );
@@ -312,7 +320,7 @@ void verify( const std::string &ascii )
     // display sizes and overhead
     auto overhead = [&]( int size ) -> int { return ((size*100/ascii.size())-100); };
 
-    std::cout << ( show ? std::string() + '\"' + ascii + '\"' : "(hidden text)" ) << std::endl;
+    std::cout << ( display ? std::string() + '\"' + ascii + '\"' : "(hidden text)" ) << std::endl;
     std::cout << "\tdefault: " << overhead( ascii.size()) << "% overhead (total: " <<  ascii.size() << " bytes)\n";
     std::cout << "\tbase-64: "   << overhead(text64.size()) << "% overhead (total: " << text64.size() << " bytes)\n";
     std::cout << "\tbase-91: "   << overhead(text91.size()) << "% overhead (total: " << text91.size() << " bytes)\n";
@@ -321,15 +329,15 @@ void verify( const std::string &ascii )
 
 int main() {
     // [ref] http://en.wikipedia.org/wiki/Base64
-    verify<true>( "Man is distinguished, not only by his reason, but by this singular passion from\n"
+    verify( "Man is distinguished, not only by his reason, but by this singular passion from\n"
      "other animals, which is a lust of the mind, that by a perseverance of delight in the continued\n"
      "and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure." );
 
-    verify<true>( "hello world \x1\x2");
+    verify( "hello world \x1\x2");
 
     std::string charmap;
     for( int i = 0; i < 256; ++i ) charmap += char(i);
-    verify<false>( charmap );
+    verify( charmap, false );
 
     std::cout << "All ok." << std::endl;
 }
