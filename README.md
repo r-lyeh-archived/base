@@ -43,7 +43,7 @@ Hello world from BASE91! ☺ <-> \OwJh\Io2Tv!lE^jpr4JuucSS5V*pBkA
 - Original base64 implementation by René Nyffenegger, [zlib/libpng licensed](http://www.adp-gmbh.ch/cpp/common/base64.html).
 
 ## Changelog
-- V1.0.2 (2016/04/20): Base85 support (custom Z85); In-place API; Project renamed
+- v1.0.2 (2016/04/20): Base85 support (custom Z85); In-place API; Project renamed
 - v1.0.1 (2015/12/07): Update sample
 - v1.0.0 (2014/04/26): Base64 support
 - v0.0.0 (2013/04/12): Initial commit (custom basE91)
