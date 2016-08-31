@@ -256,8 +256,8 @@ namespace {
             return false;            
         } else {
             // remove padding, if needed
-            while( out.size() && out.back() == '\0' ) out.pop_back();
-               if( out.size() && out.back() == '\1' ) out.pop_back();
+            while( out.size() && *out.rbegin() == '\0' ) out.resize( out.size() - 1 );
+               if( out.size() && *out.rbegin() == '\1' ) out.resize( out.size() - 1 );
             return true;
         }
     }
